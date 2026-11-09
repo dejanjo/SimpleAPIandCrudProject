@@ -18,6 +18,8 @@ builder.Services.AddAutoMapper(opt =>
 {
 	opt.CreateMap<Villa, VillaCreateDTO>().ReverseMap();
 	opt.CreateMap<Villa, VillaUpdateDTO>().ReverseMap();
+	opt.CreateMap<Villa, VillaDTO>().ReverseMap();
+	opt.CreateMap<VillaUpdateDTO, VillaDTO>().ReverseMap();
 });
 var app = builder.Build();
 
