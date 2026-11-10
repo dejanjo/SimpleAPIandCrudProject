@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RoyalVilla_API.Data;
@@ -10,6 +11,7 @@ namespace RoyalVilla_API.Controllers
 {
 	[Route("api/villa")]
 	[ApiController]
+	//[Authorize(Roles = "Customer, Admin")]
 	public class VillaController : ControllerBase
 	{
 		private readonly ApplicationDbContext _db;
@@ -21,6 +23,7 @@ namespace RoyalVilla_API.Controllers
 		}
 
 		[HttpGet]
+		//[Authorize(Roles ="Admin")]
 		[ProducesResponseType(typeof(ApiResponse<IEnumerable<VillaDTO>>), statusCode:StatusCodes.Status200OK)]
 		[ProducesResponseType(typeof(ApiResponse<IEnumerable<object>>), statusCode:StatusCodes.Status500InternalServerError)]
 		public async Task<ActionResult<ApiResponse<IEnumerable<VillaDTO>>>> GetVillas()
@@ -32,6 +35,7 @@ namespace RoyalVilla_API.Controllers
 		}
 
 		[HttpGet("{id:int}")]
+		//[AllowAnonymous]
 		[ProducesResponseType(typeof(ApiResponse<VillaDTO>), statusCode: StatusCodes.Status200OK)]
 		[ProducesResponseType(typeof(ApiResponse<object>), statusCode: StatusCodes.Status404NotFound)]
 		[ProducesResponseType(typeof(ApiResponse<object>), statusCode: StatusCodes.Status500InternalServerError)]
