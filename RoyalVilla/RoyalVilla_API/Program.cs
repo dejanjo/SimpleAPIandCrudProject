@@ -4,10 +4,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using RoyalVilla_API.Data;
 using RoyalVilla_API.Models;
-using RoyalVilla_API.Models.DTO;
+using RoyalVilla.DTO;
 using RoyalVilla_API.Services;
 using Scalar.AspNetCore;
 using System.Text;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("JWTSettings")["Secret"]);
@@ -28,9 +29,13 @@ builder.Services.AddAuthentication(opt =>
 		ValidateIssuer = false,
 		ValidateAudience = false,
 		ValidateLifetime = true,
-		ClockSkew = TimeSpan.Zero
+		ClockSkew = TimeSpan.Zero,
+		NameClaimType = ClaimTypes.Name,
+		RoleClaimType = ClaimTypes.Name
 	};
 });
+
+builder.Services.AddCors();
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(opt =>
@@ -91,6 +96,7 @@ if (app.Environment.IsDevelopment())
 	app.MapScalarApiReference();
 }
 
+app.UseCors(o => o.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().WithExposedHeaders("*"));
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
