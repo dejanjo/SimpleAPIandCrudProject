@@ -25,7 +25,7 @@
 			Create(true, 200, message, data);
 
 		public static ApiResponse<TData> CreatedAt(TData data, string message) =>
-			Create(true, 201 , message);
+			Create(true, 201 , message, data);
 
 		public static ApiResponse<TData> NoContent(string message = "Operation completed successfully") =>
 			Create(true, 204, message);
