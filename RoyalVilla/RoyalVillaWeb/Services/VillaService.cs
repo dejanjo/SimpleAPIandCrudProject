@@ -7,60 +7,56 @@ namespace RoyalVillaWeb.Services
 	public class VillaService : BaseService, IVillaService
 	{
 		private const string APIEndPoint = "/api/villa";
-		public VillaService(IHttpClientFactory httpClient, IConfiguration configuration) : base(httpClient)
+		public VillaService(IHttpClientFactory httpClient, IConfiguration configuration, IHttpContextAccessor httpContextAccessor) 
+			: base(httpClient, httpContextAccessor)
 		{
 		}
 
-		public Task<T?> CreateAsync<T>(VillaCreateDTO villaCreateDTO, string token)
+		public Task<T?> CreateAsync<T>(VillaCreateDTO villaCreateDTO)
 		{
 			return SendAsync<T>(new ApiRequest
 			{
 				ApiType = SD.ApiType.POST,
 				Data = villaCreateDTO,
 				Url = APIEndPoint,
-				Token = token
 			});
 		}
 
-		public Task<T?> DeleteAsync<T>(int id, string token)
+		public Task<T?> DeleteAsync<T>(int id)
 		{
 			return SendAsync<T>(new ApiRequest
 			{
 				ApiType = SD.ApiType.DELETE,
 				Url = $"{APIEndPoint}/{id}",
-				Token = token
 			});
 		}
 
-		public Task<T?> GetAllAsync<T>(string token)
+		public Task<T?> GetAllAsync<T>()
 		{
 			return SendAsync<T>(new ApiRequest
 			{
 				ApiType = SD.ApiType.GET,
 				Url = $"{APIEndPoint}",
-				Token = token
 			});
 
 		}
 
-		public Task<T?> GetAsync<T>(int id, string token)
+		public Task<T?> GetAsync<T>(int id)
 		{
 			return SendAsync<T>(new ApiRequest
 			{
 				ApiType = SD.ApiType.GET,
 				Url = $"{APIEndPoint}/{id}",
-				Token = token
 			});
 		}
 
-		public Task<T?> UpdateAsync<T>(VillaUpdateDTO villaUpdateDTO, string token)
+		public Task<T?> UpdateAsync<T>(VillaUpdateDTO villaUpdateDTO)
 		{
 			return SendAsync<T>(new ApiRequest
 			{
-				ApiType = SD.ApiType.GET,
+				ApiType = SD.ApiType.PUT,
 				Data = villaUpdateDTO,
 				Url = $"{APIEndPoint}/{villaUpdateDTO.Id}",
-				Token = token
 			});
 		}
 	}

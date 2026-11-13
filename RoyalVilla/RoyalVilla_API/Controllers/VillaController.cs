@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RoyalVilla.DTO;
@@ -9,6 +10,7 @@ namespace RoyalVilla_API.Controllers
 {
 	[Route("api/villa")]
 	[ApiController]
+	
 	//[Authorize(Roles = "Customer, Admin")]
 	public class VillaController : ControllerBase
 	{
@@ -63,6 +65,7 @@ namespace RoyalVilla_API.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		[ProducesResponseType(typeof(ApiResponse<VillaDTO>), statusCode: StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ApiResponse<object>), statusCode: StatusCodes.Status409Conflict)]
 		[ProducesResponseType(typeof(ApiResponse<object>), statusCode: StatusCodes.Status400BadRequest)]
@@ -99,6 +102,7 @@ namespace RoyalVilla_API.Controllers
 		}
 
 		[HttpPut("{id:int}")]
+		[Authorize(Roles = "Admin")]
 		[ProducesResponseType(typeof(ApiResponse<VillaDTO>), statusCode: StatusCodes.Status200OK)]
 		[ProducesResponseType(typeof(ApiResponse<object>), statusCode: StatusCodes.Status404NotFound)]
 		[ProducesResponseType(typeof(ApiResponse<object>), statusCode: StatusCodes.Status400BadRequest)]
@@ -148,6 +152,7 @@ namespace RoyalVilla_API.Controllers
 		}
 
 		[HttpDelete("{id:int}")]
+		[Authorize(Roles = "Admin")]
 		[ProducesResponseType(typeof(ApiResponse<object>), statusCode: StatusCodes.Status200OK)]
 		[ProducesResponseType(typeof(ApiResponse<object>), statusCode: StatusCodes.Status404NotFound)]
 		[ProducesResponseType(typeof(ApiResponse<object>), statusCode: StatusCodes.Status500InternalServerError)]

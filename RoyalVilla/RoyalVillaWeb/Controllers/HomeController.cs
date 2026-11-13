@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RoyalVilla.DTO;
 using RoyalVillaWeb.Models;
@@ -16,12 +17,13 @@ namespace RoyalVillaWeb.Controllers
 			_villaService = villaService;
 			_mapper = mapper;
 		}
+
 		public async Task<IActionResult> Index()
 		{
 			List<VillaDTO> villaList = new List<VillaDTO>();
 			try
 			{
-				var response = await _villaService.GetAllAsync<ApiResponse<List<VillaDTO>>>("");
+				var response = await _villaService.GetAllAsync<ApiResponse<List<VillaDTO>>>();
 				if (response != null && response.Success && response.Data != null)
 				{
 					villaList = response.Data;
